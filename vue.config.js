@@ -1,8 +1,9 @@
 const path = require("path");
+const autoprefixer = require("autoprefixer");
 const px2rem = require("postcss-px2rem");
 
 const postcss = px2rem({
-  remUnit: 32 //基准大小 baseSize
+  remUnit: 25.6 //基准大小 baseSize
 });
 
 function resolve(dir) {
@@ -21,7 +22,7 @@ module.exports = {
   css: {
     loaderOptions: {
       postcss: {
-        plugins: [postcss]
+        plugins: [autoprefixer(), postcss]
       }
     }
   }

@@ -3,6 +3,7 @@ import "@assets/js/viewpoint";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
+import "@assets/css/common.less";
 // vant
 import "vant/lib/button/style";
 import { vants, vantCmp } from "./widgets/vant-components";
