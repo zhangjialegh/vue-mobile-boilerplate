@@ -9,11 +9,12 @@
           <strong class="label">挂牌均价</strong>
           <span class="tag grey">上海二手</span>
         </p>
-        <img src="../assets/img/defaul-avatar.png" class="chart-img" alt="" />
+        <!-- <img src="../assets/img/defaul-avatar.png" class="chart-img" alt="" /> -->
+        <line-chart />
         <p class="flex-end">
           <strong class="dark-num">5,954</strong>
           <span class="unit">元/㎡</span>
-          <img class="trend-icon" src="../assets/img/logo.png" alt="" />
+          <i class="icon trend-icon up"></i>
         </p>
       </li>
       <li class="col-item">
@@ -25,7 +26,7 @@
         <p class="flex-end">
           <strong class="dark-num">5,954</strong>
           <span class="unit">元/㎡</span>
-          <img class="trend-icon" src="../assets/img/logo.png" alt="" />
+          <i class="icon trend-icon down"></i>
         </p>
       </li>
       <li class="col-item last">
@@ -37,15 +38,18 @@
         <p class="flex-end">
           <strong class="dark-num">5,954</strong>
           <span class="unit">元/㎡</span>
-          <img class="trend-icon" src="../assets/img/logo.png" alt="" />
+          <i class="icon trend-icon ping"></i>
         </p>
       </li>
     </ul>
   </div>
 </template>
 <script>
+import LineChart from "@components/LineChart";
+
 export default {
   name: "house-tab",
+  components: { LineChart },
   props: {
     type: {
       type: String,

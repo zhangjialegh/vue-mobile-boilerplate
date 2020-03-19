@@ -6,21 +6,21 @@
           公办民办一律摇号，学区公办民办一律摇号，学区一律摇号，学区
         </h2>
         <ul class="tag-wrap">
-          <li class="tag">xxx</li>
-          <li class="tag">xxx</li>
-          <li class="tag">xxx</li>
+          <li class="tag grey">xxx</li>
+          <li class="tag grey">xxx</li>
+          <li class="tag grey">xxx</li>
         </ul>
       </div>
       <div class="top-right">
         <div class="img-box">
-          <img src="../assets/img/logo.png" alt="" />
+          <img v-lazy="require('../assets/img/logo.png')" alt="" />
         </div>
       </div>
     </div>
     <div class="bottom">
       <div class="bottom-left">
         <div class="avatar-box">
-          <img src="../assets/img/upload-avatar.png" alt="" />
+          <img v-lazy="require('../assets/img/upload-avatar.png')" alt="" />
         </div>
         <span class="avatar-name margin-left">xxxxx</span>
       </div>

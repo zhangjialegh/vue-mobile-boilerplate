@@ -1,6 +1,29 @@
-import { Notify, Toast, Dialog, Tab, Tabs } from "vant";
+import {
+  Notify,
+  Toast,
+  Dialog,
+  Tab,
+  Tabs,
+  Divider,
+  ActionSheet,
+  Uploader,
+  Sticky,
+  Lazyload,
+  Button,
+  Field
+} from "vant";
 const fbCmps = [Notify, Toast, Dialog];
-const usCmps = [Tab, Tabs];
+const usCmps = [
+  Tab,
+  Tabs,
+  Divider,
+  ActionSheet,
+  Uploader,
+  Sticky,
+  Lazyload,
+  Button,
+  Field
+];
 export const vantCmp = {};
 fbCmps.forEach(cmp => {
   vantCmp[cmp.name] = cmp;

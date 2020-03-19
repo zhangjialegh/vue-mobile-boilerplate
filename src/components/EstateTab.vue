@@ -13,13 +13,13 @@
         </div>
         <div class="flex-end">
           <p class="flex-end" style="align-items: center">
-            <span style="line-height:60px">
-              <img class="trend-icon" src="../assets/img/logo.png" alt="" />
-              <strong class="dark-num down" style="padding-bottom: 5px"
+            <span class="trend up" style="line-height:60px">
+              <i class="icon trend-icon up"></i>
+              <strong class="dark-num up" style="padding-bottom: 5px"
                 >5,954</strong
               >
             </span>
-            <span class="tag green">挂牌均价同比</span>
+            <span class="tag red">挂牌均价同比</span>
           </p>
         </div>
       </li>
@@ -32,13 +32,13 @@
         </div>
         <div class="flex-end">
           <p class="flex-end" style="align-items: center">
-            <span style="line-height:60px">
-              <img class="trend-icon" src="../assets/img/logo.png" alt="" />
-              <strong class="dark-num down" style="padding-bottom: 5px"
+            <span class="trend" style="line-height:60px">
+              <i class="icon trend-icon ping"></i>
+              <strong class="dark-num ping" style="padding-bottom: 5px"
                 >5,954</strong
               >
             </span>
-            <span class="tag green">挂牌均价同比</span>
+            <span class="tag grey">挂牌均价同比</span>
           </p>
         </div>
       </li>
@@ -51,8 +51,8 @@
         </div>
         <div class="flex-end">
           <p class="flex-end" style="align-items: center">
-            <span style="line-height:60px">
-              <img class="trend-icon" src="../assets/img/logo.png" alt="" />
+            <span class="trend" style="line-height:60px">
+              <i class="icon trend-icon down"></i>
               <strong class="dark-num down" style="padding-bottom: 5px"
                 >5,954</strong
               >
@@ -89,6 +89,11 @@ export default {
       justify-content: flex-end;
       align-items: flex-end;
       flex-direction: column;
+    }
+    .trend {
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 }
