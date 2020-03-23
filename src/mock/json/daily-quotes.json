@@ -1,0 +1,219 @@
+{
+  "body": {
+    "secondHandContent": {
+      "title": "每日行情-二手房",
+      "subTitle": "兔博士独家楼市关键数据，数据更新时间",
+      "url": "https://agent.2boss.cn",
+      "cityId": 1,
+      "innerVos": [
+        {
+          "quoteName": "挂牌均价",
+          "nameTag": "上海二手",
+          "quotePrice": 543233, 
+          "quotePriceDiff": 1323,
+          "sevenDaysPric": [34, 43, 32, 5, 43, 12, 54] 
+        },
+        {
+          "quoteName": "挂牌总量",
+          "nameTag": "上海二手",
+          "quotePrice": 543233, 
+          "quotePriceDiff": -132323, 
+          "sevenDaysPric": [34, 43, 32, 5, 43, 12, 12] 
+        },
+        {
+          "quoteName": "昨日新增",
+          "nameTag": "上海二手",
+          "quotePrice": 543233, 
+          "quotePriceDiff": 0, 
+          "sevenDaysPric": [34, 43, 32, 5, 43, 12, 94] 
+        }
+      ]
+    },
+    "newHouseCentent": {
+      "title": "每日行情-新房",
+      "subTitle": "兔博士独家楼市关键数据，数据更新时间", 
+      "url": "https://agent.2boss.cn",
+      "cityId": 1,
+      "innerVos": [
+        {
+          "quoteName": "挂牌均价",
+          "nameTag": "上海二手",
+          "quotePrice": 543233, 
+          "quotePriceDiff": 132323, 
+          "sevenDaysPric": [34, 43, 32, 5, 43, 12, 33] 
+        },
+        {
+          "quoteName": "挂牌总量",
+          "nameTag": "上海二手",
+          "quotePrice": 543233, 
+          "quotePriceDiff": 132323, 
+          "sevenDaysPric": [34, 43, 32, 5, 43, 12, 42] 
+        },
+        {
+          "quoteName": "昨日新增",
+          "nameTag": "上海二手",
+          "quotePrice": 543233, 
+          "quotePriceDiff": 132323, 
+          "sevenDaysPric": [34, 43, 32, 5, 43, 12, 53] 
+        }
+      ]
+    },
+    "districtContent": {
+      "title": "每日行情-新房",
+      "subTitle": "兔博士独家楼市关键数据，数据更新时间",
+      "url": "https://agent.2boss.cn",
+      "cityId": 1,
+      "districtId": 1, 
+      "innerVos": [
+        {
+          "quoteName": "昨日新增",
+          "nameTag": "上海二手",
+          "quotePrice": 543233, 
+          "quotePriceDiff": 132323, 
+          "sevenDaysPric": [34, 43, 312, 5, 43, 12, 333]
+        },
+        {
+          "quoteName": "昨日新增",
+          "nameTag": "上海二手",
+          "quotePrice": 543233, 
+          "quotePriceDiff": 132323, 
+          "sevenDaysPric": [34, 43, 312, 5, 43, 12, 124]
+        },
+        {
+          "quoteName": "昨日新增",
+          "nameTag": "上海二手",
+          "quotePrice": 543233, 
+          "quotePriceDiff": 132323, 
+          "sevenDaysPric": [34, 43, 312, 5, 43, 12, 644]
+        }
+      ]
+    },
+
+    "plateContent": {
+      "title": "每日行情-新房",
+      "subTitle": "兔博士独家楼市关键数据，数据更新时间", 
+      "cityId": 1,
+      "districtId": 1, 
+      "plateId": 1,
+      "innerVos": [
+        {
+          "quoteName": "昨日新增",
+          "nameTag": "上海二手",
+          "quotePrice": 543233, 
+          "quotePriceDiff": 132323,
+          "sevenDaysPric": [34, 43, 312, 5, 43, 12, 4] 
+        },
+        {
+          "quoteName": "昨日新增",
+          "nameTag": "上海二手",
+          "quotePrice": 543233, 
+          "quotePriceDiff": 132323,
+          "sevenDaysPric": [34, 43, 312, 5, 43, 12, 4] 
+        },
+        {
+          "quoteName": "昨日新增",
+          "nameTag": "上海二手",
+          "quotePrice": 543233, 
+          "quotePriceDiff": 132323,
+          "sevenDaysPric": [34, 43, 312, 5, 43, 12, 4] 
+        }
+      ]
+    },
+    "houseContent": {
+      "title": "每日行情-新房",
+      "subTitle": "兔博士独家楼市关键数据，数据更新时间",
+      "url": "https://agent.2boss.cn",
+      "cityId": 1,
+      "houseInnerVos": [
+        {
+          "districtId": 2, 
+          "plateId": 1, 
+          "houseId": 2, 
+          "rankingTitle": "NO2", 
+          "houseName": "小区名",
+          "quotePrice": 23123, 
+          "priceRatio": 34, 
+          "priceDiff": 32434,
+          "label": "挂牌均价同比"
+        },
+        {
+          "districtId": 2, 
+          "plateId": 1, 
+          "houseId": 2, 
+          "rankingTitle": "NO2", 
+          "houseName": "小区名",
+          "quotePrice": 23123, 
+          "priceRatio": 34, 
+          "priceDiff": 32434,
+          "label": "挂牌均价同比"
+        },
+        {
+          "districtId": 2, 
+          "plateId": 1, 
+          "houseId": 2, 
+          "rankingTitle": "NO2", 
+          "houseName": "小区名",
+          "quotePrice": 23123, 
+          "priceRatio": 34, 
+          "priceDiff": 32434,
+          "label": "挂牌均价同比"
+        }
+      ]
+    },
+    "estateContent": {
+      "title": "每日行情-房源",
+      "subTitle": "选择上海最近全网新房信息，数据更新时间",
+      "url": "https://agent.2boss.cn",
+      "cityId": 1,
+      "estateInnerVos": [
+        {
+          "roomSourceId": 1,
+          "districtId": 1, 
+          "plateId": 1, 
+          "houseId": 1, 
+          "estateId": 1, 
+          "rankingTitle": "NO1",
+          "houseName": "小区名",
+          "quotePrice": 31231231, 
+          "priceRatio": 21, 
+          "priceDiff": 132312, 
+          "area": 3412, 
+          "roomStructure": "2室1厅",
+          "totalPrice": 123123 
+        },
+        {
+          "roomSourceId": 1,
+          "districtId": 1, 
+          "plateId": 1, 
+          "houseId": 1, 
+          "estateId": 1, 
+          "rankingTitle": "NO1",
+          "houseName": "小区名",
+          "quotePrice": 31231231, 
+          "priceRatio": 21, 
+          "priceDiff": 132312, 
+          "area": 3412, 
+          "roomStructure": "2室1厅",
+          "totalPrice": 123123 
+        },
+        {
+          "roomSourceId": 1,
+          "districtId": 1, 
+          "plateId": 1, 
+          "houseId": 1, 
+          "estateId": 1, 
+          "rankingTitle": "NO1",
+          "houseName": "小区名",
+          "quotePrice": 31231231, 
+          "priceRatio": 21, 
+          "priceDiff": 132312, 
+          "area": 3412, 
+          "roomStructure": "2室1厅",
+          "totalPrice": 123123 
+        }
+      ]
+    }
+  },
+  "errMsg": "",
+  "resultCode": 0
+}

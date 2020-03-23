@@ -10,7 +10,9 @@ import {
   Sticky,
   Lazyload,
   Button,
-  Field
+  Field,
+  PullRefresh,
+  Overlay
 } from "vant";
 const fbCmps = [Notify, Toast, Dialog];
 const usCmps = [
@@ -22,7 +24,9 @@ const usCmps = [
   Sticky,
   Lazyload,
   Button,
-  Field
+  Field,
+  PullRefresh,
+  Overlay
 ];
 export const vantCmp = {};
 fbCmps.forEach(cmp => {

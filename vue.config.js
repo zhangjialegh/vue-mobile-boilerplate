@@ -11,11 +11,24 @@ function resolve(dir) {
 }
 
 module.exports = {
+  // devServer: {
+  //   proxy: {
+  //     "/api": {
+  //       target: process.env.BASE_URL,
+  //       changeOrigin: true,
+  //       pathRewrite: {
+  //         "^/api": ""
+  //       }
+  //     }
+  //   }
+  // },
   chainWebpack: config => {
     config.resolve.alias
       .set("@", resolve("src"))
       .set("@assets", resolve("src/assets"))
       .set("@views", resolve("src/views"))
+      .set("@utils", resolve("src/utils"))
+      .set("@config", resolve("src/config"))
       .set("@components", resolve("src/components"));
   },
 

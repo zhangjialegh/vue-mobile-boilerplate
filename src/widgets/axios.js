@@ -1,7 +1,7 @@
 import axios from "axios";
 export default {
-  install(Vue, options) {
-    axios.defaults.baseURL = options.api;
+  install(Vue) {
+    // axios.defaults.baseURL = options.api || "/api";
     axios.defaults.headers.post["Content-Type"] = "application/json";
     axios.defaults.headers.post["Accept"] =
       "application/json; charset=utf-8, text/plain, */*";
@@ -12,10 +12,10 @@ export default {
 
     axios.interceptors.request.use(
       function(request) {
-        let account = Vue.store.state.account;
-        if (account && account.token) {
-          request.headers.token = account.token;
-        }
+        // let account = Vue.store.state.account;
+        // if (account && account.token) {
+        //   request.headers.token = account.token;
+        // }
 
         // let url = request.url
         // let tpi = url.indexOf('_t=')
@@ -41,15 +41,11 @@ export default {
 
     axios.interceptors.response.use(
       function(response) {
-        if (response.config.loading === true) {
-          Vue.gb.Toast.clear();
-        }
+        Vue.gb.Toast.clear();
         return response;
       },
       function(error) {
-        if (error.config.loading === true) {
-          Vue.gb.Toast.clear();
-        }
+        Vue.gb.Toast.clear();
 
         let response = error.response;
         if (response) {

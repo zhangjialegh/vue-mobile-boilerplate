@@ -36,6 +36,36 @@ export default {
   methods: {
     handleInput(val) {
       this.leftNum = this.maxNum - val.length;
+    },
+    putMemo() {
+      if (!this.value.trim()) {
+        this.$toast("个人简介不能为空");
+        return;
+      }
+      this.$axios
+        .request({
+          method: "post",
+          url: "/superior/1/superior/saveMemo",
+          data: {
+            memo: this.value
+          },
+          loading: true
+        })
+        .then(res => {
+          if (res.data.resultCode === 0) {
+            const t = setTimeout(() => {
+              this.$gb.updateMemo(this.value);
+              this.$router.go(-1);
+              clearTimeout(t);
+            }, 500);
+            this.$toast.success({
+              duration: 500,
+              message: "保存成功"
+            });
+          } else {
+            this.$toast(res.data.errMsg);
+          }
+        });
     }
   }
 };

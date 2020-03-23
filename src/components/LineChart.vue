@@ -25,16 +25,16 @@ export default {
     const trendLinear = {
       up: ["rgba(253,80,86,0.0)", "rgba(253,80,86,0.4)"],
       down: ["rgba(76,213,76,0.0)", "rgba(76,213,76,0.4)"],
-      normal: ["rgba(224,224,224,0.00)", "#E5E5E5"]
+      ping: ["rgba(224,224,224,0.00)", "#E5E5E5"]
     };
     const LineStyle = {
       up: ["rgba(253,80,86,0.1)", "rgba(253,80,86,1)"],
       down: ["rgba(76,213,76,0.1)", "rgba(76,213,76,1)"],
-      normal: ["#E0E0E0", "#BABABA"]
+      ping: ["#E0E0E0", "#BABABA"]
     };
     const option = {
       grid: {
-        top: 0,
+        top: "15%",
         left: 0,
         right: 5,
         bottom: 0
@@ -43,7 +43,7 @@ export default {
       xAxis: [
         {
           type: "category",
-          boundaryGap: false,
+          boundaryGap: true,
           show: false,
           data: this.data
         }
@@ -51,25 +51,30 @@ export default {
       yAxis: [
         {
           type: "value",
-          show: false
+          show: false,
+          min: 0
         }
       ],
       series: [
         {
           type: "line",
           data: this.data,
+          showSymbol: false,
           markPoint: {
             symbol: "circle",
             symbolSize: 10,
+            itemStyle: {
+              color: "transparent",
+              borderColor: trendLinear[this.trend][1],
+              borderWidth: 5
+            },
             data: [
               {
-                name: "周最高",
-                xAxis: this.data.length - 1,
-                yAxis: this.data[this.data.length - 2]
+                value: this.data[this.data.length - 1],
+                coord: [this.data.length - 1, this.data[this.data.length - 1]]
               }
             ]
           },
-          showSymbol: false,
           lineStyle: {
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
               {
@@ -104,7 +109,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .chart-box {
-  width: 80px;
+  width: 90px;
   height: 30px;
   &.up {
     border-bottom: 0.5px dashed rgba(253, 80, 86, 0.2);
@@ -112,7 +117,7 @@ export default {
   &.down {
     border-bottom: 0.5px dashed rgba(76, 213, 76, 0.2);
   }
-  &.normal {
+  &.ping {
     border-bottom: 0.5px dashed rgba(0, 0, 0, 0.1);
   }
   > .my-chart {

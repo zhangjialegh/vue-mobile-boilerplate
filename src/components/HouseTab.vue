@@ -1,44 +1,42 @@
 <template>
   <div class="tab-house-wrap">
     <p class="tab-notice">
-      选择上海最近全网二手房信息，数据更新时间 14:30
+      {{ propertyInfo.subTitle || " 数据更新" }}
     </p>
     <ul>
-      <li class="col-item">
+      <li
+        class="col-item"
+        :class="{ last: index === propertyInfo.innerVos.length - 1 }"
+        v-for="(item, index) in propertyInfo.innerVos"
+        :key="index"
+      >
         <p class="flex-start">
-          <strong class="label">挂牌均价</strong>
-          <span class="tag grey">上海二手</span>
+          <strong class="label">{{ item.quoteName }}</strong>
+          <span class="tag grey">{{ item.nameTag }}</span>
         </p>
-        <!-- <img src="../assets/img/defaul-avatar.png" class="chart-img" alt="" /> -->
-        <line-chart />
+        <line-chart
+          :data="item.sevenDaysPric"
+          :trend="
+            item.quotePriceDiff > 0
+              ? 'up'
+              : item.quotePriceDiff < 0
+              ? 'down'
+              : 'ping'
+          "
+        />
         <p class="flex-end">
-          <strong class="dark-num">5,954</strong>
+          <strong class="dark-num">{{
+            $gb.thousandFormat(item.quotePriceDiff)
+          }}</strong>
           <span class="unit">元/㎡</span>
-          <i class="icon trend-icon up"></i>
-        </p>
-      </li>
-      <li class="col-item">
-        <p class="flex-start">
-          <strong class="label">挂牌均价</strong>
-          <span class="tag grey">上海二手</span>
-        </p>
-        <img src="../assets/img/defaul-avatar.png" class="chart-img" alt="" />
-        <p class="flex-end">
-          <strong class="dark-num">5,954</strong>
-          <span class="unit">元/㎡</span>
-          <i class="icon trend-icon down"></i>
-        </p>
-      </li>
-      <li class="col-item last">
-        <p class="flex-start">
-          <strong class="label">挂牌均价</strong>
-          <span class="tag grey">上海二手</span>
-        </p>
-        <img src="../assets/img/defaul-avatar.png" class="chart-img" alt="" />
-        <p class="flex-end">
-          <strong class="dark-num">5,954</strong>
-          <span class="unit">元/㎡</span>
-          <i class="icon trend-icon ping"></i>
+          <i
+            class="icon trend-icon up"
+            :class="{
+              up: item.quotePriceDiff > 0,
+              down: item.quotePriceDiff < 0,
+              ping: item.quotePriceDiff == 0
+            }"
+          ></i>
         </p>
       </li>
     </ul>
@@ -53,7 +51,26 @@ export default {
   props: {
     type: {
       type: String,
-      default: "second-hand"
+      default: "second-hand" // "new-house"
+    },
+    data: {
+      type: Object,
+      default: function() {
+        return {};
+      }
+    }
+  },
+  data() {
+    return {
+      propertyInfo: {}
+    };
+  },
+  watch: {
+    data: {
+      handler(newVal) {
+        this.propertyInfo = newVal;
+      },
+      deep: true
     }
   }
 };

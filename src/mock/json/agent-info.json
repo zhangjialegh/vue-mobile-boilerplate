@@ -1,0 +1,18 @@
+{
+  "body":{
+    "cityId": 1 ,
+           "cityName":"城市Name",
+           "headImgUrl": "",
+           "superiorId": 1,
+           "superiorName": "经纪人名称",
+           "contactinfo":"123322333",
+           "weChatNum": "我是微信号",
+           "storeId": 1,
+           "storeName": "门店名称",
+           "agentName":"公司名称",
+           "memo":"经纪人简介",
+           "districtId":1,
+           "districtName": "区域名"
+
+  }
+}

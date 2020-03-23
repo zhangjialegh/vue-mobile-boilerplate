@@ -1,0 +1,31 @@
+{
+  "body": {
+    "type": 3, 
+        "moduleId": 1, 
+        "moduleName": "类目名称", 
+        "onlyReports": {
+          "title": "独家报告楼市行情标题",
+            "desc": "独家报告楼市行情描述",
+            "viewCount": 1232,
+            "hadoop": [{
+              "title": "报告标题",
+              "standardCover": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1584941074902&di=9bf541fc0e63d8f75466d371c03b5270&imgtype=0&src=http%3A%2F%2Fimg.xspic.com%2Fimg%2F247%2F245%2F259575_1.jpg",
+              "url": "https://www.baidu.com",
+              "mUrl": "https://www.baidu.com"
+            },{
+              "title": "报告标题",
+              "standardCover": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1584941074902&di=9bf541fc0e63d8f75466d371c03b5270&imgtype=0&src=http%3A%2F%2Fimg.xspic.com%2Fimg%2F247%2F245%2F259575_1.jpg",
+              "url": "https://www.baidu.com",
+              "mUrl": "https://www.baidu.com"
+            },{
+              "title": "报告标题",
+              "standardCover": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1584941074902&di=9bf541fc0e63d8f75466d371c03b5270&imgtype=0&src=http%3A%2F%2Fimg.xspic.com%2Fimg%2F247%2F245%2F259575_1.jpg",
+              "url": "https://www.baidu.com",
+              "mUrl": "https://www.baidu.com"
+            }] 
+
+        }
+  },
+  "errMsg": "",
+  "resultCode": 0
+}
