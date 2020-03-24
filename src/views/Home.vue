@@ -75,40 +75,40 @@
             </div>
           </div>
         </div>
+        <template v-if="JSON.stringify(propertyDynamic) !== '{}'">
+          <h2 class="common-title">上海最新房价动态</h2>
+          <div class="card padding">
+            <van-tabs v-model="active" swipeable animated :lazy-render="false">
+              <van-tab title="二手房" v-if="propertyDynamic.secondHandContent">
+                <house-tab
+                  type="second-hand"
+                  :data="propertyDynamic.secondHandContent"
+                />
+              </van-tab>
+              <van-tab title="新房" v-if="propertyDynamic.newHouseCentent">
+                <house-tab
+                  type="new-house"
+                  :data="propertyDynamic.newHouseCentent"
+                />
+              </van-tab>
+              <van-tab title="主营小区" v-if="propertyDynamic.houseContent">
+                <estate-tab :data="propertyDynamic.houseContent" />
+              </van-tab>
+            </van-tabs>
+          </div>
+        </template>
 
-        <h2 class="common-title">上海最新房价动态</h2>
-        <div class="card padding">
-          <van-tabs
-            v-model="active"
-            swipeable
-            animated
-            :lazy-render="false"
-            @change="tabChange"
-          >
-            <van-tab title="二手房" v-if="propertyDynamic.secondHandContent">
-              <house-tab
-                type="second-hand"
-                :data="propertyDynamic.secondHandContent"
-              />
-            </van-tab>
-            <van-tab title="新房" v-if="propertyDynamic.newHouseCentent">
-              <house-tab
-                type="new-house"
-                :data="propertyDynamic.newHouseCentent"
-              />
-            </van-tab>
-            <van-tab title="主营小区" v-if="propertyDynamic.houseContent">
-              <estate-tab :data="propertyDynamic.houseContent" />
-            </van-tab>
-          </van-tabs>
-        </div>
-
-        <h2 class="common-title">地产头条</h2>
-        <div>
-          <head-line-item />
-          <head-line-item />
-          <head-line-item />
-        </div>
+        <template v-if="recommendList && recommendList.length">
+          <h2 class="common-title">地产头条</h2>
+          <div>
+            <head-line-item
+              :data="item"
+              v-for="(item, index) in recommendList"
+              :key="index"
+              @click.native="navigateToRecommend(item)"
+            />
+          </div>
+        </template>
 
         <template v-if="onlyReportInfo.hadoop && onlyReportInfo.hadoop.length">
           <h2 class="common-title">独家报告推荐</h2>
@@ -141,36 +141,11 @@
                 </div>
               </li>
             </ul>
-            <!-- <p class="recommend">
-              <span class="tag-corn">推荐理由</span>
-              <span class="text"
-                >小白必选、大数据精选、专业咨询师、第一手数据、最全面分析、AI智能自动生成</span
-              >
-            </p> -->
           </div>
         </template>
 
         <h2 class="common-title">每日最新房源</h2>
         <div class="card transparent my-house-source">
-          <!-- <ul class="filter-wrap">
-            <li class="filter-item start">
-              <span class="label">最新挂牌</span>
-              <i class="icon arrow-solid"></i>
-            </li>
-            <li class="filter-item">
-              <span class="label">总价</span>
-              <i class="icon arrow-solid"></i>
-            </li>
-            <li class="filter-item">
-              <span class="label">户型</span>
-              <i class="icon arrow-solid"></i>
-            </li>
-            <li class="filter-item">
-              <span class="label">户型</span>
-              <i class="icon arrow-solid"></i>
-            </li>
-          </ul> -->
-
           <div class="house-info-item">
             <div class="top">
               <div class="top-left">
@@ -281,17 +256,14 @@
         <van-divider :hairline="false" :style="{ borderColor: '#979797' }"
           >下载兔博士APP，查看更多精彩内容</van-divider
         >
-        <p
-          class="divider-bottom-text"
-          :style="{ paddingBottom: iphoneX + 'px' }"
-        >
+        <p class="divider-bottom-text">
           经纪人可前往关注“兔博士超级经纪人”，获取更多免费工具
         </p>
       </div>
     </van-pull-refresh>
 
     <div class="float-footer-box" v-if="accessType === 'agent'">
-      <div class="float-footer" :style="{ paddingBottom: iphoneX + 'px' }">
+      <div class="float-footer">
         <div class="shop-box" @click="navigateToShop">
           <img v-lazy="require('../assets/img/shop.png')" alt="shop" />
           <span>商城</span>
@@ -318,7 +290,8 @@ import HouseTab from "@components/HouseTab";
 import EstateTab from "@components/EstateTab";
 import HeadLineItem from "@components/HeadLineItem";
 import ShareOverly from "@components/ShareOverly";
-// import { makePhoneCall } from "@utils/index";
+import { wxConfig, wxShare, wxLocation } from "@assets/js/wxSdk";
+import { shareDomin, defaultShareImgUrl } from "@config/index";
 export default {
   name: "Home",
   components: { HouseTab, EstateTab, HeadLineItem, ShareOverly },
@@ -327,17 +300,19 @@ export default {
       active: 0,
       showActionSheet: false,
       isRefresh: false,
-      propertyDynamic: {
-        secondHandContent: {},
-        newHouseCentent: {},
-        houseContent: {}
-      },
-      onlyReportInfo: {}
+      propertyDynamic: {},
+      onlyReportInfo: {},
+      recommendList: []
     };
   },
   computed: {
-    iphoneX() {
-      return this.$store.state.iphoneX;
+    cityId() {
+      return this.$route.query.cityId || this.$store.state.userInfo.cityId;
+    },
+    superiorId() {
+      return (
+        this.$route.query.superiorId || this.$store.state.userInfo.superiorId
+      );
     },
     accessType() {
       return this.$store.state.accessType;
@@ -347,6 +322,9 @@ export default {
     },
     agentInfo() {
       return this.$store.state.userInfo;
+    },
+    wxInit() {
+      return this.$store.state.wxInit;
     },
     actions() {
       const agentInfo = this.$store.state.userInfo;
@@ -361,31 +339,83 @@ export default {
     }
   },
   methods: {
-    tabChange() {},
-    initData(isRefresh) {
-      this.getDailyQuotes(isRefresh);
+    async initData(isRefresh) {
+      const vm = this;
       this.getOnlyReports(isRefresh);
+      if (this.wxInit) {
+        const { lng, lat } = await wxLocation();
+        this.getDailyQuotes(isRefresh, { lng, lat });
+        this.getRecommendTop(isRefresh, { lng, lat });
+      } else {
+        try {
+          await wxConfig();
+          const { lng, lat } = await wxLocation();
+          this.getDailyQuotes(isRefresh, { lng, lat });
+          this.getRecommendTop(isRefresh, { lng, lat });
+        } catch (error) {
+          vm.$toast.fail("微信sdk注册失败!");
+        }
+      }
     },
-    getDailyQuotes(isRefresh = false) {
+    // 城市动态
+    async getDailyQuotes(isRefresh = false, options) {
+      if (this.wxInit) {
+        try {
+          const res = await this.$axios.request({
+            method: "get",
+            url: "/rabbit/1/app/front/daily-quotes",
+            params: {
+              cityId: this.cityId,
+              include: "1,2,5",
+              ...options
+            },
+            loading: !isRefresh
+          });
+          this.isRefresh = false;
+          this.propertyDynamic = res.data.body;
+        } catch (err) {
+          this.isRefresh = false;
+        }
+      }
+    },
+    // 地产头条
+    getRecommendTop(isRefresh = false, options) {
       this.$axios
         .request({
           method: "get",
-          url: "/rabbit/1/app/front/daily-quotes",
+          url: "/rabbit/1/city-home/users-recommend-top",
+          params: {
+            cityId: this.cityId,
+            ...options
+          },
           loading: !isRefresh
         })
         .then(res => {
           this.isRefresh = false;
-          this.propertyDynamic = res.data.body;
+          const body = res.data.body;
+          if (body && body.list) {
+            this.recommendList = body.list.filter(
+              item => item.type === "article"
+            );
+            const title = this.recommendList[0].title;
+            this.initCustomShare(title);
+          } else {
+            this.recommendList = [];
+          }
         })
         .catch(() => {
           this.isRefresh = false;
         });
     },
+    // 独家报告
     getOnlyReports(isRefresh = false) {
       this.$axios
         .request({
           method: "get",
           url: "/rabbit/1/city-home/choice/only-reports",
+          params: {
+            cityId: this.cityId
+          },
           loading: !isRefresh
         })
         .then(res => {
@@ -406,7 +436,6 @@ export default {
     },
     selectActionSheet(a) {
       if (a.className.includes("wechat")) {
-        // TODO: wechat
         this.$gb.h5Copy(this.agentInfo.weChatNum);
         this.$toast.success("微信号复制成功!");
         this.showActionSheet = false;
@@ -421,16 +450,33 @@ export default {
     },
     // 跳转个人简介
     navigateToComment() {
-      if (this.abstractText) return;
+      if (this.abstractText || this.accessType === "customer") return;
       this.$router.push("/comment");
     },
-    navigateToReport() {},
-    navigateToReportItem() {},
-    // 跳转商城
+    navigateToRecommend(item) {
+      location.href = item.url;
+    },
+    navigateToReportItem(item) {
+      location.href = item.url;
+    },
+    // 跳转商城 TODO:
     navigateToShop() {},
     // 点击分享
     handleShare() {
       this.$refs.shareOverly.showOverly();
+    },
+    // 微信自定义分享 TODO:
+    async initCustomShare(title) {
+      const vm = this;
+      try {
+        await wxShare({
+          title,
+          imgUrl: vm.agentInfo.headImgUrl || defaultShareImgUrl,
+          link: `${shareDomin}/?cityId=${vm.cityId}&superiorId=${vm.superiorId}`
+        });
+      } catch (error) {
+        vm.$toast.fail("微信分享自定义失败!");
+      }
     }
   },
   created() {
@@ -611,6 +657,7 @@ export default {
     line-height: 12px;
     margin-top: -6px;
     margin-bottom: 10px;
+    padding-bottom: env(safe-area-inset-bottom);
   }
 }
 </style>

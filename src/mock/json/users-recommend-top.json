@@ -1,0 +1,71 @@
+{
+  "body": {
+    "list": [{
+      "type": "article",
+      "skuIdAlias": "skuId 别名",
+      "imageType": 2,
+      "id": 1,
+      "image": [
+        "https://2boss.oss-cn-hangzhou.aliyuncs.com/dr2_banner/banner_1560219138876"
+      ],
+      "title": "文章主标题",
+      "content": "文章简要内容",
+      "author": "文章作者",
+      "headUrl": "https://2boss.oss-cn-hangzhou.aliyuncs.com/dr2_banner/banner_1560219138876",
+      "authorId": 1,
+      "pubTime": "23123-123123",
+      "url": "链接地址",
+      "mUrl": "M站导航地址",
+      "tag": [
+        "文章标签",
+        "文章标签"
+      ],
+      "readCount": 123
+    },{
+      "type": "article",
+      "skuIdAlias": "skuId 别名",
+      "imageType": 2,
+      "id": 1,
+      "image": [
+        "https://2boss.oss-cn-hangzhou.aliyuncs.com/dr2_banner/banner_1560219138876"
+      ],
+      "title": "文章主标题",
+      "content": "文章简要内容",
+      "author": "文章作者",
+      "headUrl": "https://2boss.oss-cn-hangzhou.aliyuncs.com/dr2_banner/banner_1560219138876",
+      "authorId": 1,
+      "pubTime": "23123-123123",
+      "url": "链接地址",
+      "mUrl": "M站导航地址",
+      "tag": [
+        "文章标签",
+        "文章标签"
+      ],
+      "readCount": 123
+    },{
+      "type": "article",
+      "skuIdAlias": "skuId 别名",
+      "imageType": 2,
+      "id": 1,
+      "image": [
+        "https://2boss.oss-cn-hangzhou.aliyuncs.com/dr2_banner/banner_1560219138876"
+      ],
+      "title": "文章主标题",
+      "content": "文章简要内容",
+      "author": "文章作者",
+      "headUrl": "https://2boss.oss-cn-hangzhou.aliyuncs.com/dr2_banner/banner_1560219138876",
+      "authorId": 1,
+      "pubTime": "23123-123123",
+      "url": "链接地址",
+      "mUrl": "M站导航地址",
+      "tag": [
+        "文章标签",
+        "文章标签"
+      ],
+      "readCount": 123
+    }]
+  },
+  "errMsg": "",
+  "resultCode": 0
+
+}

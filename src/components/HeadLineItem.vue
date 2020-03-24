@@ -3,36 +3,45 @@
     <div class="top">
       <div class="top-left">
         <h2 class="title">
-          公办民办一律摇号，学区公办民办一律摇号，学区一律摇号，学区
+          {{ data.title }}
         </h2>
-        <ul class="tag-wrap">
-          <li class="tag grey">xxx</li>
-          <li class="tag grey">xxx</li>
-          <li class="tag grey">xxx</li>
+        <ul class="tag-wrap" v-if="data.tag && data.tag.length">
+          <li class="tag grey" v-for="(item, index) in data.tag" :key="index">
+            {{ item }}
+          </li>
         </ul>
       </div>
       <div class="top-right">
         <div class="img-box">
-          <img v-lazy="require('../assets/img/logo.png')" alt="" />
+          <img v-lazy="data.image[0]" alt="pic" />
         </div>
       </div>
     </div>
     <div class="bottom">
       <div class="bottom-left">
         <div class="avatar-box">
-          <img v-lazy="require('../assets/img/upload-avatar.png')" alt="" />
+          <img v-lazy="data.headUrl" alt="headUrl" />
         </div>
-        <span class="avatar-name margin-left">xxxxx</span>
+        <span class="avatar-name margin-left">{{ data.author }}</span>
       </div>
       <div class="bottom-right">
-        <p class="text">465人看过</p>
-        <p class="text margin-left large">发布于07月22日</p>
+        <p class="text">{{ data.readCount || 0 }}人看过</p>
+        <p class="text margin-left large">发布于{{ data.pubTime }}</p>
       </div>
     </div>
   </div>
 </template>
 <script>
-export default {};
+export default {
+  props: {
+    data: {
+      type: Object,
+      default: function() {
+        return {};
+      }
+    }
+  }
+};
 </script>
 <style lang="less">
 .card {

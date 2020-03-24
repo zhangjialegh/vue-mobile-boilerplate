@@ -3,6 +3,7 @@ import "@assets/js/viewpoint";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
+import { baseDomin } from "./config";
 import "@assets/style/common.less";
 
 Vue.router = router;
@@ -19,7 +20,7 @@ Vue.use(gb, vantCmp);
 
 // axios
 import axios from "./widgets/axios";
-Vue.use(axios, { api: "" });
+Vue.use(axios, { api: baseDomin });
 
 // bus
 import Bus from "./widgets/bus";
@@ -32,20 +33,25 @@ Vue.use(vuePageTitle);
 // 引入微信js-sdk
 import wx from "./widgets/wx";
 Vue.use(wx);
-// import qs from "qs";
-// console.log(qs.stringify({ a: 1, b: 2 }, { addQueryPrefix: false }));
 
-// mock
-
-require("./mock");
 Vue.config.productionTip = false;
 
-toPage(true);
+// mock
+require("./mock");
+
+// 判断是否是经纪人分享的链接 // TODO: 是否有更好的方式
+import qs from "qs";
+const { cityId, superiorId } = qs.parse(location.search, {
+  ignoreQueryPrefix: true
+});
+if (cityId && superiorId) {
+  toPage(false);
+} else {
+  toPage(true);
+}
 
 async function toPage(needLogin) {
-  if (needLogin) {
-    await Vue.gb.initAccount();
-  }
+  await Vue.gb.initAccount(needLogin, { cityId, superiorId });
   enterSystem();
 }
 

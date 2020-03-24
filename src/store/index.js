@@ -9,7 +9,8 @@ export default new Vuex.Store({
     accessType: "agent", // 'customer', 'agent'
     abstractText: "",
     accout: {},
-    userInfo: {}
+    userInfo: {},
+    wxInit: false
   },
   mutations: {
     iphoneX(state, payload) {
@@ -26,6 +27,9 @@ export default new Vuex.Store({
     },
     userInfo(state, payload) {
       state.userInfo = payload;
+    },
+    wxInit(state, payload) {
+      state.wxInit = payload;
     }
   }
 });

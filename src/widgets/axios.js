@@ -1,4 +1,6 @@
 import axios from "axios";
+// import { tokenName } from "@config/index";
+
 export default {
   install(Vue) {
     // axios.defaults.baseURL = options.api || "/api";
@@ -12,19 +14,11 @@ export default {
 
     axios.interceptors.request.use(
       function(request) {
+        // TODO: 获取token
         // let account = Vue.store.state.account;
         // if (account && account.token) {
         //   request.headers.token = account.token;
         // }
-
-        // let url = request.url
-        // let tpi = url.indexOf('_t=')
-        // if (tpi !== -1) {
-        //   url = url.substring(0, tpi - 1)
-        // }
-
-        // let c = url.indexOf('?') === -1 ? '?' : '&'
-        // request.url = `${url}${c}_t=${parseInt(new Date().getTime() / 1000, 10)}`
 
         if (request.loading === true) {
           Vue.gb.Toast.loading({
@@ -52,6 +46,7 @@ export default {
           let data = response.data || {};
           if (data.code === 401) {
             // 登录无效 TODO:
+            Vue.gb.toLogin();
           } else {
             if (data.message) {
               Vue.gb.Toast.fail(data.message);

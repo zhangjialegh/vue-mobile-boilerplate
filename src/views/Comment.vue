@@ -4,7 +4,7 @@
       <div class="textarea-box">
         <van-field
           v-model="value"
-          rows="3"
+          rows="4"
           type="textarea"
           :maxlength="maxNum"
           placeholder="请介绍下自己吧"
@@ -19,7 +19,9 @@
     </div>
     <div class="float-footer-box">
       <div class="float-footer center">
-        <van-button type="danger" style="width:100%">提交</van-button>
+        <van-button type="danger" style="width:100%" @click="putMemo"
+          >提交</van-button
+        >
       </div>
     </div>
   </div>
@@ -102,7 +104,7 @@ export default {
           font-size: 16px;
           color: #000000;
           letter-spacing: 0;
-          line-height: 16px;
+          line-height: 26px;
           &::placeholder {
             opacity: 0.4;
             font-family: PingFangSC-Regular;

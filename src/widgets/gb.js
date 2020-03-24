@@ -28,29 +28,42 @@ export default {
         input.remove();
         return result;
       },
-      async initAccount() {
-        const token = localStorage.getItem(tokenName);
-        let userInfo = localStorage.getItem("userInfo");
-        if (userInfo) {
-          userInfo = JSON.parse(userInfo);
-        }
-        if (token && userInfo && JSON.stringify(userInfo) !== "{}") {
-          Vue.store.commit("userInfo", userInfo);
-          Vue.store.commit("abstractText", userInfo.memo || "");
-        } else if (token && (!userInfo || JSON.stringify(userInfo) === "{}")) {
-          const res = await Vue.gb.getAgentInfo();
-          const userInfo = res.data.body;
-          Vue.store.commit("userInfo", userInfo);
-          Vue.store.commit("abstractText", userInfo.memo || "");
-          localStorage.setItem("userInfo", JSON.stringify(userInfo));
-        } else if (!token) {
-          Vue.gb.toLogin();
+      async initAccount(needLogin, options) {
+        if (needLogin) {
+          Vue.store.commit("accessType", "agent");
+          const token = localStorage.getItem(tokenName);
+          let userInfo = localStorage.getItem("userInfo");
+          if (userInfo) {
+            userInfo = JSON.parse(userInfo);
+          }
+          if (token && userInfo && JSON.stringify(userInfo) !== "{}") {
+            Vue.store.commit("userInfo", userInfo);
+            Vue.store.commit("abstractText", userInfo.memo || "");
+          } else if (
+            token &&
+            (!userInfo || JSON.stringify(userInfo) === "{}")
+          ) {
+            await Vue.gb.initAgentInfo();
+          } else if (!token) {
+            Vue.gb.toLogin();
+          }
+        } else {
+          Vue.store.commit("accessType", "customer");
+          await Vue.gb.initAgentInfo(options);
         }
       },
-      getAgentInfo() {
+      async initAgentInfo(options) {
+        const res = await Vue.gb.getAgentInfo(options);
+        const userInfo = res.data.body;
+        Vue.store.commit("userInfo", userInfo);
+        Vue.store.commit("abstractText", userInfo.memo || "");
+        localStorage.setItem("userInfo", JSON.stringify(userInfo));
+      },
+      getAgentInfo(params = {}) {
         return Vue.axios.request({
           method: "get",
-          url: "/superior/1/superior/getSuperiorInfo"
+          url: "/superior/1/superior/getSuperiorInfo",
+          params
         });
       },
       toLogin() {
