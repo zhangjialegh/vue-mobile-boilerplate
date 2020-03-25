@@ -38,3 +38,9 @@ Mock.mock(
   "get",
   require("./json/users-recommend-top.json")
 );
+
+Mock.mock(
+  format(`/superior/${v}/new-estate/my-estate-of-contractor`),
+  "get",
+  require("./json/agent-my-house.json")
+);

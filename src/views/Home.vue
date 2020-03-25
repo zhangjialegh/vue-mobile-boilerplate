@@ -144,115 +144,77 @@
           </div>
         </template>
 
-        <h2 class="common-title">每日最新房源</h2>
-        <div class="card transparent my-house-source">
-          <div class="house-info-item">
-            <div class="top">
-              <div class="top-left">
-                <img
-                  v-lazy="require('../assets/img/defaul-avatar.png')"
-                  alt="house"
-                />
-              </div>
-              <div class="top-right">
-                <div class="header">
-                  <h3 class="title">张江汤臣豪园二期</h3>
-                  <p class="location">
-                    <span class="text">哈啊哈</span>
+        <template v-if="myEstateHouse && myEstateHouse.length">
+          <h2 class="common-title">每日最新房源</h2>
+          <div class="card transparent my-house-source">
+            <div
+              class="house-info-item"
+              v-for="(item, index) in myEstateHouse"
+              :key="index"
+            >
+              <div class="top">
+                <div class="top-left">
+                  <img v-lazy="item.picList[0]" alt="house" />
+                </div>
+                <div class="top-right">
+                  <div class="header">
+                    <h3 class="title">{{ item.houseName }}</h3>
+                    <p class="location">
+                      <span class="text">{{ item.plateName }}</span>
+                      <i class="line"></i>
+                      <span class="text">{{ item.districtName }}</span>
+                    </p>
+                  </div>
+                  <div class="neck">
+                    <ul class="tag-wrap">
+                      <li class="tag grey">房龄19年</li>
+                    </ul>
+                    <p class="hangout">
+                      挂牌<span class="hangday">{{ item.listedDay }}</span
+                      >天
+                    </p>
+                  </div>
+                  <div class="lumbar">
+                    <span class="text"
+                      >{{ item.roomCount }}室{{ item.livingRoomCount }}厅</span
+                    >
                     <i class="line"></i>
-                    <span class="text">哈啊哈</span>
-                  </p>
-                </div>
-                <div class="neck">
-                  <ul class="tag-wrap">
-                    <li class="tag grey">房龄19年</li>
-                  </ul>
-                  <p class="hangout">ss<span class="hangday">3</span>tian</p>
-                </div>
-                <div class="lumbar">
-                  <span class="text">4是3厅</span>
-                  <i class="line"></i>
-                  <span class="text">333㎡</span>
-                  <i class="line"></i>
-                  <span class="text">无线</span>
-                </div>
-                <div class="footer">
-                  <div class="left">
-                    <span class="num">324</span>
-                    <span class="unit">完</span>
+                    <span class="text"
+                      >{{ $gb.thousandFormat(item.area) }}㎡</span
+                    >
+                    <i class="line"></i>
+                    <span class="text"
+                      >{{ $gb.thousandFormat(item.avgPrice) }}万/㎡</span
+                    >
                   </div>
-                  <div class="right">
-                    <i class="icon up"></i>
-                    <span class="persent">53%</span>
+                  <div class="footer">
+                    <div class="left">
+                      <span class="num">{{
+                        $gb.thousandFormat(item.totalPriceMillion)
+                      }}</span>
+                      <span class="unit">万</span>
+                    </div>
+                    <div class="right">
+                      <!-- <i class="icon up"></i>
+                      <span class="persent">53%</span> -->
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="bottom">
-              <div class="will sold">
-                <span class="text">我有，直接定价</span>
-                <img src="../assets/img/go.png" alt="will" />
-              </div>
-              <div class="will buy">
-                <span class="text">我要，出价求购</span>
-                <img src="../assets/img/go.png" alt="will" />
+              <div class="bottom">
+                <div class="will sold" @click="navigateToSold(item)">
+                  <span class="text">我有，直接定价</span>
+                  <img src="../assets/img/go.png" alt="will" />
+                </div>
+                <div class="will buy" @click="navigateToBuy(item)">
+                  <span class="text">我要，出价求购</span>
+                  <img src="../assets/img/go.png" alt="will" />
+                </div>
               </div>
             </div>
           </div>
-          <div class="house-info-item">
-            <div class="top">
-              <div class="top-left">
-                <img
-                  v-lazy="require('../assets/img/defaul-avatar.png')"
-                  alt="house"
-                />
-              </div>
-              <div class="top-right">
-                <div class="header">
-                  <h3 class="title">张江汤臣豪园二期</h3>
-                  <p class="location">
-                    <span class="text">哈啊哈</span>
-                    <i class="line"></i>
-                    <span class="text">哈啊哈</span>
-                  </p>
-                </div>
-                <div class="neck">
-                  <ul class="tag-wrap">
-                    <li class="tag grey">房龄19年</li>
-                  </ul>
-                  <p class="hangout">ss<span class="hangday">3</span>tian</p>
-                </div>
-                <div class="lumbar">
-                  <span class="text">4是3厅</span>
-                  <i class="line"></i>
-                  <span class="text">333㎡</span>
-                  <i class="line"></i>
-                  <span class="text">无线</span>
-                </div>
-                <div class="footer">
-                  <div class="left">
-                    <span class="num">324</span>
-                    <span class="unit">完</span>
-                  </div>
-                  <div class="right">
-                    <i class="icon up"></i>
-                    <span class="persent">53%</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="bottom">
-              <div class="will sold">
-                <span class="text">我有，直接定价</span>
-                <img src="../assets/img/go.png" alt="will" />
-              </div>
-              <div class="will buy">
-                <span class="text">我要，出价求购</span>
-                <img src="../assets/img/go.png" alt="will" />
-              </div>
-            </div>
-          </div>
-        </div>
+        </template>
+
         <van-divider :hairline="false" :style="{ borderColor: '#979797' }"
           >下载兔博士APP，查看更多精彩内容</van-divider
         >
@@ -291,7 +253,7 @@ import EstateTab from "@components/EstateTab";
 import HeadLineItem from "@components/HeadLineItem";
 import ShareOverly from "@components/ShareOverly";
 import { wxConfig, wxShare, wxLocation } from "@assets/js/wxSdk";
-import { shareDomin, defaultShareImgUrl } from "@config/index";
+import { shareDomin, defaultShareImgUrl, marketUrl } from "@config/index";
 export default {
   name: "Home",
   components: { HouseTab, EstateTab, HeadLineItem, ShareOverly },
@@ -302,7 +264,8 @@ export default {
       isRefresh: false,
       propertyDynamic: {},
       onlyReportInfo: {},
-      recommendList: []
+      recommendList: [],
+      myEstateHouse: []
     };
   },
   computed: {
@@ -342,6 +305,7 @@ export default {
     async initData(isRefresh) {
       const vm = this;
       this.getOnlyReports(isRefresh);
+      this.getEstateHouse(isRefresh);
       if (this.wxInit) {
         const { lng, lat } = await wxLocation();
         this.getDailyQuotes(isRefresh, { lng, lat });
@@ -431,6 +395,31 @@ export default {
           this.isRefresh = false;
         });
     },
+    // 我的小区房源
+    getEstateHouse(isRefresh = false) {
+      this.$axios
+        .request({
+          method: "get",
+          url: "/superior/1/new-estate/my-estate-of-contractor",
+          params: {
+            cityId: this.cityId,
+            superiorId: this.superiorId
+          },
+          loading: !isRefresh
+        })
+        .then(res => {
+          this.isRefresh = false;
+          const body = res.data.body;
+          if (body && body.estateList) {
+            this.myEstateHouse = body.estateList;
+          } else {
+            this.myEstateHouse = [];
+          }
+        })
+        .catch(() => {
+          this.isRefresh = false;
+        });
+    },
     handleActionSheet() {
       this.showActionSheet = true;
     },
@@ -454,13 +443,23 @@ export default {
       this.$router.push("/comment");
     },
     navigateToRecommend(item) {
-      location.href = item.url;
+      location.href = item.mUrl;
     },
     navigateToReportItem(item) {
-      location.href = item.url;
+      location.href = item.mUrl;
     },
-    // 跳转商城 TODO:
-    navigateToShop() {},
+    // 跳转商城
+    navigateToShop() {
+      location.href = marketUrl;
+    },
+    // 房东报价跳转
+    navigateToSold(item) {
+      location.href = item.landlordH5Url;
+    },
+    // 卖家报价跳转
+    navigateToBuy(item) {
+      location.href = item.buyerH5Url;
+    },
     // 点击分享
     handleShare() {
       this.$refs.shareOverly.showOverly();

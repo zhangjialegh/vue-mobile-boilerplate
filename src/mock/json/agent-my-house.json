@@ -1,0 +1,45 @@
+{
+  "body":{
+    "estateList":[{
+        "id" : 1,
+        "favoriteCount" : 42234,
+        "roomCount" : 2,
+        "livingRoomCount" : 3,
+        "area" : 4234,
+        "bathroomCount" : 2,
+        "listedDay" : 3,
+        "totalPriceMillion" : 2323,
+        "avgPrice": 444,
+        "picList" : ["https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1584941074902&di=9bf541fc0e63d8f75466d371c03b5270&imgtype=0&src=http%3A%2F%2Fimg.xspic.com%2Fimg%2F247%2F245%2F259575_1.jpg"],
+        "houseName": "小区名称",
+        "labelList": ["房源标签"], 
+        "plateName":"板块名",
+        "districtName":"区域名",
+        "landlordQuote": 3242342,
+        "landlordH5Url": "https://www.baidu.com",
+        "buyerQuote": 23123, 
+        "buyerH5Url": "https://www.baidu.com"
+    },{
+      "id" : 1,
+      "favoriteCount" : 42234,
+      "roomCount" : 2,
+      "livingRoomCount" : 3,
+      "area" : 4234,
+      "bathroomCount" : 2,
+      "listedDay" : 3,
+      "totalPriceMillion" : 2323,
+      "avgPrice": 444,
+      "picList" : ["https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1584941074902&di=9bf541fc0e63d8f75466d371c03b5270&imgtype=0&src=http%3A%2F%2Fimg.xspic.com%2Fimg%2F247%2F245%2F259575_1.jpg"],
+      "houseName": "小区名称",
+      "labelList": ["房源标签"], 
+      "plateName":"板块名",
+      "districtName":"区域名",
+      "landlordQuote": 3242342,
+      "landlordH5Url": "https://www.baidu.com",
+      "buyerQuote": 23123, 
+      "buyerH5Url": "https://www.baidu.com"
+  }]
+  },
+  "errMsg": "",
+  "resultCode": 0
+}

@@ -7,6 +7,7 @@ export default {
         location.href = `tel:${num}`;
       },
       thousandFormat(num) {
+        if (!num) return 0;
         if (num < 0) num *= -1;
         var str = num + "";
         // ["8", "7", "6", "5", "4", "3", "2", "1"]
