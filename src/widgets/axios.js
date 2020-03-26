@@ -1,9 +1,9 @@
 import axios from "axios";
-// import { tokenName } from "@config/index";
+import { tokenName } from "@config/index";
 
 export default {
-  install(Vue) {
-    // axios.defaults.baseURL = options.api || "/api";
+  install(Vue, options) {
+    axios.defaults.baseURL = options.api || "/api";
     axios.defaults.headers.post["Content-Type"] = "application/json";
     axios.defaults.headers.post["Accept"] =
       "application/json; charset=utf-8, text/plain, */*";
@@ -15,10 +15,10 @@ export default {
     axios.interceptors.request.use(
       function(request) {
         // TODO: 获取token
-        // let account = Vue.store.state.account;
-        // if (account && account.token) {
-        //   request.headers.token = account.token;
-        // }
+        let token = Vue.store.state.accountToken;
+        if (token) {
+          request.headers[tokenName] = token;
+        }
 
         if (request.loading === true) {
           Vue.gb.Toast.loading({

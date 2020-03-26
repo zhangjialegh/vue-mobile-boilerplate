@@ -8,7 +8,7 @@ export default new Vuex.Store({
     iphoneX: 10,
     accessType: "agent", // 'customer', 'agent'
     abstractText: "",
-    accout: {},
+    accountToken: "",
     userInfo: {},
     wxInit: false
   },
@@ -22,8 +22,8 @@ export default new Vuex.Store({
     abstractText(state, payload) {
       state.abstractText = payload;
     },
-    account(state, payload) {
-      state.account = payload;
+    accountToken(state, payload) {
+      state.accountToken = payload;
     },
     userInfo(state, payload) {
       state.userInfo = payload;

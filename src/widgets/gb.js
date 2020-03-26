@@ -1,5 +1,6 @@
 import { tokenName, loginPage } from "@config/index";
-import {getAgentInfo} from "@api/index"
+import { getAgentInfo } from "@api/index";
+import Storage from "@assets/js/storage";
 export default {
   install(Vue, options = {}) {
     Vue.gb = Vue.prototype.$gb = {
@@ -11,7 +12,6 @@ export default {
         if (!num) return 0;
         if (num < 0) num *= -1;
         var str = num + "";
-        // ["8", "7", "6", "5", "4", "3", "2", "1"]
         return str
           .split("")
           .reverse()
@@ -33,7 +33,7 @@ export default {
       async initAccount(needLogin, options) {
         if (needLogin) {
           Vue.store.commit("accessType", "agent");
-          const token = localStorage.getItem(tokenName);
+          const token = Storage.getVal(tokenName);
           let userInfo = localStorage.getItem("userInfo");
           if (userInfo) {
             userInfo = JSON.parse(userInfo);
@@ -41,10 +41,12 @@ export default {
           if (token && userInfo && JSON.stringify(userInfo) !== "{}") {
             Vue.store.commit("userInfo", userInfo);
             Vue.store.commit("abstractText", userInfo.memo || "");
+            Vue.store.commit("accountToken", token);
           } else if (
             token &&
             (!userInfo || JSON.stringify(userInfo) === "{}")
           ) {
+            Vue.store.commit("accountToken", token);
             await Vue.gb.initAgentInfo();
           } else if (!token) {
             Vue.gb.toLogin();

@@ -47,7 +47,11 @@
               src="../assets/img/defaul-avatar.png"
               alt="avatar"
             />
-            <van-uploader v-else-if="accessType === 'agent'">
+            <van-uploader
+              v-else-if="accessType === 'agent'"
+              result-type="dataUrl"
+              :after-read="handleUpoload"
+            >
               <img
                 class="default-img"
                 src="../assets/img/upload-avatar.png"
@@ -254,7 +258,15 @@ import HeadLineItem from "@components/HeadLineItem";
 import ShareOverly from "@components/ShareOverly";
 import { wxConfig, wxShare, wxLocation } from "@assets/js/wxSdk";
 import { shareDomin, defaultShareImgUrl, marketUrl } from "@config/index";
-import {dailyQuotes,recommendTop,onlyReports,estateHouse} from "@api/index"
+import {
+  dailyQuotes,
+  recommendTop,
+  onlyReports,
+  estateHouse,
+  uploadImage,
+  updateHeadUrl,
+  wxAuth
+} from "@api/index";
 export default {
   name: "Home",
   components: { HouseTab, EstateTab, HeadLineItem, ShareOverly },
@@ -313,10 +325,15 @@ export default {
         this.getRecommendTop(isRefresh, { lng, lat });
       } else {
         try {
-          await wxConfig();
-          const { lng, lat } = await wxLocation();
-          this.getDailyQuotes(isRefresh, { lng, lat });
-          this.getRecommendTop(isRefresh, { lng, lat });
+          const res = await wxAuth();
+          if (res.data.code === 0) {
+            await wxConfig(res.data.data);
+            const { lng, lat } = await wxLocation();
+            this.getDailyQuotes(isRefresh, { lng, lat });
+            this.getRecommendTop(isRefresh, { lng, lat });
+          } else {
+            vm.$toast.fail(res.data.message);
+          }
         } catch (error) {
           vm.$toast.fail("微信sdk注册失败!");
         }
@@ -330,7 +347,7 @@ export default {
             cityId: this.cityId,
             include: "1,2,5",
             ...options
-          })
+          });
           this.isRefresh = false;
           this.propertyDynamic = res.data.body;
         } catch (err) {
@@ -343,7 +360,8 @@ export default {
       recommendTop(isRefresh, {
         cityId: this.cityId,
         ...options
-      }).then(res => {
+      })
+        .then(res => {
           this.isRefresh = false;
           const body = res.data.body;
           if (body && body.list) {
@@ -364,7 +382,8 @@ export default {
     getOnlyReports(isRefresh = false) {
       onlyReports(isRefresh, {
         cityId: this.cityId
-      }).then(res => {
+      })
+        .then(res => {
           this.isRefresh = false;
           const body = res.data.body;
           if (body.type == 3) {
@@ -382,7 +401,8 @@ export default {
       estateHouse(isRefresh, {
         cityId: this.cityId,
         superiorId: this.superiorId
-      }).then(res => {
+      })
+        .then(res => {
           this.isRefresh = false;
           const body = res.data.body;
           if (body && body.estateList) {
@@ -394,6 +414,22 @@ export default {
         .catch(() => {
           this.isRefresh = false;
         });
+    },
+    // 上传头像
+    async handleUpoload(file) {
+      const vm = this;
+      try {
+        const res = await uploadImage({ base64Data: file.content });
+        const { url } = res.data.data;
+        try {
+          const res = await updateHeadUrl({ headUrl: url });
+          console.log(res, "mmm");
+        } catch (error) {
+          vm.$toast.fail("图片上传失败!");
+        }
+      } catch (error) {
+        vm.$toast.fail("图片上传失败!");
+      }
     },
     handleActionSheet() {
       this.showActionSheet = true;

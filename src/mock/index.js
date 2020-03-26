@@ -1,5 +1,5 @@
 const Mock = require("mockjs");
-const v = 1;
+const v = "v1";
 function format(url) {
   return RegExp(url + ".*");
 }
