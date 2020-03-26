@@ -254,6 +254,7 @@ import HeadLineItem from "@components/HeadLineItem";
 import ShareOverly from "@components/ShareOverly";
 import { wxConfig, wxShare, wxLocation } from "@assets/js/wxSdk";
 import { shareDomin, defaultShareImgUrl, marketUrl } from "@config/index";
+import {dailyQuotes,recommendTop,onlyReports,estateHouse} from "@api/index"
 export default {
   name: "Home",
   components: { HouseTab, EstateTab, HeadLineItem, ShareOverly },
@@ -325,16 +326,11 @@ export default {
     async getDailyQuotes(isRefresh = false, options) {
       if (this.wxInit) {
         try {
-          const res = await this.$axios.request({
-            method: "get",
-            url: "/rabbit/1/app/front/daily-quotes",
-            params: {
-              cityId: this.cityId,
-              include: "1,2,5",
-              ...options
-            },
-            loading: !isRefresh
-          });
+          const res = await dailyQuotes(isRefresh, {
+            cityId: this.cityId,
+            include: "1,2,5",
+            ...options
+          })
           this.isRefresh = false;
           this.propertyDynamic = res.data.body;
         } catch (err) {
@@ -344,17 +340,10 @@ export default {
     },
     // 地产头条
     getRecommendTop(isRefresh = false, options) {
-      this.$axios
-        .request({
-          method: "get",
-          url: "/rabbit/1/city-home/users-recommend-top",
-          params: {
-            cityId: this.cityId,
-            ...options
-          },
-          loading: !isRefresh
-        })
-        .then(res => {
+      recommendTop(isRefresh, {
+        cityId: this.cityId,
+        ...options
+      }).then(res => {
           this.isRefresh = false;
           const body = res.data.body;
           if (body && body.list) {
@@ -373,16 +362,9 @@ export default {
     },
     // 独家报告
     getOnlyReports(isRefresh = false) {
-      this.$axios
-        .request({
-          method: "get",
-          url: "/rabbit/1/city-home/choice/only-reports",
-          params: {
-            cityId: this.cityId
-          },
-          loading: !isRefresh
-        })
-        .then(res => {
+      onlyReports(isRefresh, {
+        cityId: this.cityId
+      }).then(res => {
           this.isRefresh = false;
           const body = res.data.body;
           if (body.type == 3) {
@@ -397,17 +379,10 @@ export default {
     },
     // 我的小区房源
     getEstateHouse(isRefresh = false) {
-      this.$axios
-        .request({
-          method: "get",
-          url: "/superior/1/new-estate/my-estate-of-contractor",
-          params: {
-            cityId: this.cityId,
-            superiorId: this.superiorId
-          },
-          loading: !isRefresh
-        })
-        .then(res => {
+      estateHouse(isRefresh, {
+        cityId: this.cityId,
+        superiorId: this.superiorId
+      }).then(res => {
           this.isRefresh = false;
           const body = res.data.body;
           if (body && body.estateList) {

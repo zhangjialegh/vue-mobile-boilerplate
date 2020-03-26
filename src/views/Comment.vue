@@ -27,6 +27,7 @@
   </div>
 </template>
 <script>
+import {updateMemo} from "@api/index"
 export default {
   data() {
     return {
@@ -44,16 +45,9 @@ export default {
         this.$toast("个人简介不能为空");
         return;
       }
-      this.$axios
-        .request({
-          method: "post",
-          url: "/superior/1/superior/saveMemo",
-          data: {
-            memo: this.value
-          },
-          loading: true
-        })
-        .then(res => {
+      updateMemo({
+        memo: this.value
+      }).then(res => {
           if (res.data.resultCode === 0) {
             const t = setTimeout(() => {
               this.$gb.updateMemo(this.value);

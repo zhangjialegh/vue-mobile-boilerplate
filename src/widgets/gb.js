@@ -1,4 +1,5 @@
 import { tokenName, loginPage } from "@config/index";
+import {getAgentInfo} from "@api/index"
 export default {
   install(Vue, options = {}) {
     Vue.gb = Vue.prototype.$gb = {
@@ -54,18 +55,11 @@ export default {
         }
       },
       async initAgentInfo(options) {
-        const res = await Vue.gb.getAgentInfo(options);
+        const res = await getAgentInfo(options);
         const userInfo = res.data.body;
         Vue.store.commit("userInfo", userInfo);
         Vue.store.commit("abstractText", userInfo.memo || "");
         localStorage.setItem("userInfo", JSON.stringify(userInfo));
-      },
-      getAgentInfo(params = {}) {
-        return Vue.axios.request({
-          method: "get",
-          url: "/superior/1/superior/getSuperiorInfo",
-          params
-        });
       },
       toLogin() {
         localStorage.removeItem("userInfo");
