@@ -1,9 +1,13 @@
 const path = require("path");
 const os = require("os");
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
-  .BundleAnalyzerPlugin;
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const CompressionWebpackPlugin = require("compression-webpack-plugin");
+const zopfli = require("@gfx/zopfli");
+const BrotliPlugin = require("brotli-webpack-plugin");
 
 const IS_PROD = ["production", "prod"].includes(process.env.NODE_ENV);
+const productionGzipExtensions = /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i;
 
 function resolve(dir) {
   return path.join(__dirname, dir);
@@ -26,7 +30,89 @@ module.exports = {
       }
     }
   },
+  configureWebpack: config => {
+    const plugins = [];
+    if (IS_PROD) {
+      // 移除代码中的console
+      plugins.push(
+        new UglifyJsPlugin({
+          uglifyOptions: {
+            warnings: false,
+            compress: {
+              drop_console: true,
+              drop_debugger: false,
+              pure_funcs: ["console.log"] //移除console
+            }
+          },
+          sourceMap: false,
+          parallel: true
+        })
+      );
+      // gzip压缩
+      plugins.push(
+        new CompressionWebpackPlugin({
+          algorithm(input, compressionOptions, callback) {
+            return zopfli.gzip(input, compressionOptions, callback);
+          },
+          compressionOptions: {
+            numiterations: 15
+          },
+          minRatio: 0.99,
+          test: productionGzipExtensions
+        })
+      );
+      plugins.push(
+        new BrotliPlugin({
+          test: productionGzipExtensions,
+          minRatio: 0.99
+        })
+      );
+      // 分开打包
+      config.optimization = {
+        splitChunks: {
+          cacheGroups: {
+            common: {
+              name: "chunk-common",
+              chunks: "initial",
+              minChunks: 2,
+              maxInitialRequests: 5,
+              minSize: 0,
+              priority: 1,
+              reuseExistingChunk: true,
+              enforce: true
+            },
+            vendors: {
+              name: "chunk-vendors",
+              test: /[\\/]node_modules[\\/]/,
+              chunks: "initial",
+              priority: 2,
+              reuseExistingChunk: true,
+              enforce: true
+            },
+            vantUI: {
+              name: "chunk-vant",
+              test: /[\\/]node_modules[\\/]vant[\\/]/,
+              chunks: "all",
+              priority: 3,
+              reuseExistingChunk: true,
+              enforce: true
+            },
+            echarts: {
+              name: "chunk-echarts",
+              test: /[\\/]node_modules[\\/](vue-)?echarts[\\/]/,
+              chunks: "all",
+              priority: 4,
+              reuseExistingChunk: true,
+              enforce: true
+            }
+          }
+        }
+      };
+    }
+    config.plugins = [...config.plugins, ...plugins];
+  },
   chainWebpack: config => {
+    // alias别名
     config.resolve.alias
       .set("@", resolve("src"))
       .set("@assets", resolve("src/assets"))
@@ -45,6 +131,23 @@ module.exports = {
         }
       ]);
     }
+
+    // 使用svg组件
+    const svgRule = config.module.rule("svg");
+    svgRule.uses.clear();
+    svgRule.exclude.add(/node_modules/);
+    svgRule
+      .test(/\.svg$/)
+      .use("svg-sprite-loader")
+      .loader("svg-sprite-loader")
+      .options({
+        symbolId: "icon-[name]"
+      });
+    const imagesRule = config.module.rule("images");
+    imagesRule.exclude.add(resolve("src/icons"));
+    config.module.rule("images").test(/\.(png|jpe?g|gif|svg)(\?.*)?$/);
+
+    return config;
   },
   css: {
     loaderOptions: {

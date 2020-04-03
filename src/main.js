@@ -4,6 +4,9 @@ import router from "@/router";
 import store from "@/store";
 import "amfe-flexible";
 
+// svg-icon
+import "@/icons";
+
 // vant
 // import "vant/lib/button/style";
 import { vants, vantCmp } from "@widgets/vantui";
@@ -36,5 +39,8 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   store,
-  render: h => h(App)
+  render: h => h(App),
+  mounted() {
+    document.dispatchEvent(new Event("render-event"));
+  }
 }).$mount("#app");
