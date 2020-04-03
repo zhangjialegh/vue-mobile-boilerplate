@@ -1,23 +1,24 @@
 import Vue from "vue";
-import "@assets/js/viewpoint";
-import App from "./App.vue";
-import router from "./router";
-import store from "./store";
+import App from "@/App.vue";
+import router from "@/router";
+import store from "@/store";
+import "amfe-flexible";
+
 // vant
-import "vant/lib/button/style";
-import { vants, vantCmp } from "./widgets/vant-components";
+// import "vant/lib/button/style";
+import { vants, vantCmp } from "@widgets/vantui";
 Vue.use(vants);
 
 // gb
-import gb from "./widgets/gb";
+import gb from "@widgets/gb";
 Vue.use(gb, vantCmp);
 
 // axios
-import axios from "./widgets/axios";
-Vue.use(axios, { api: "" });
+import axios from "@widgets/axios";
+Vue.use(axios);
 
 // bus
-import Bus from "./widgets/bus";
+import Bus from "@widgets/bus";
 Vue.use(Bus);
 
 //
@@ -26,6 +27,9 @@ Vue.use(vuePageTitle);
 
 // import qs from "qs";
 // console.log(qs.stringify({ a: 1, b: 2 }, { addQueryPrefix: false }));
+// const { cityId, superiorId } = qs.parse(location.search, {
+//   ignoreQueryPrefix: true
+// });
 
 Vue.config.productionTip = false;
 
