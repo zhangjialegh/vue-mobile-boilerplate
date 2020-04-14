@@ -8,7 +8,7 @@ cp .example.env .env.development
 
 ## Project setup
 ```
-yarn install
+yarn
 ```
 
 ### Compiles and hot-reloads for development
@@ -20,16 +20,6 @@ yarn start
 ```
 yarn build
 ```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-
-
 
 ## Issue
 
