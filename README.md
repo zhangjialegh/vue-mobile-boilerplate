@@ -1,17 +1,18 @@
 # vue-mobile-boilerplate
 
-## Before Start ( *Notice* )
-
-```
-cp .example.env .env.development
-```
-
 ## Project setup
 ```
 yarn
 ```
 
 ### Compiles and hot-reloads for development
+
+#### Before Start ( *Notice* )
+
+```
+cp .example.env .env.development
+```
+#### Then
 ```
 yarn start
 ```

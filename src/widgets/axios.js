@@ -1,7 +1,7 @@
 import axios from "axios";
 export default {
   install(Vue) {
-    axios.defaults.baseURL = process.env.VUE_APP_API;
+    axios.defaults.baseURL = "/";
     axios.defaults.headers.post["Content-Type"] = "application/json";
     axios.defaults.headers.post["Accept"] =
       "application/json; charset=utf-8, text/plain, */*";
