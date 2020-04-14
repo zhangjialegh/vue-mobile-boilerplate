@@ -19,22 +19,22 @@ export default {
       title: '关于'
     }
   },
-  // async asyncData({ $axios, query, params, redirect }) {
-  //   try {
-  //     const data = await $axios({
-  //       method: "get",
-  //       url: "/api/redDots?page=1",
-  //       params: {
-  //         id: query.id
-  //       }
-  //     })
-  //     return {
-  //       detail: res.data
-  //     };
-  //   } catch (error) {
-  //     return error
-  //   }
-  // },
+  async asyncData({ $axios, query, params, redirect }) {
+    try {
+      const data = await $axios({
+        method: "get",
+        url: "/api/redDots?page=1",
+        params: {
+          id: query.id
+        }
+      })
+      return {
+        detail: res.data
+      };
+    } catch (error) {
+      return error
+    }
+  },
   created() {
     console.log('login')
   },

@@ -1,11 +1,9 @@
 import qs from 'qs'
 import {VantUi} from '~/plugins/vant-ui'
 
-let isClient = process.client //区分端
-let isServer = process.server //区分端
-
-
 export default function({ $axios, redirect, app }) {
+  const isClient = process.client //区分端
+  const isServer = process.server //区分端
   $axios.onRequest(config => {
     config.data = qs.stringify(config.data, {
       allowDots: true
