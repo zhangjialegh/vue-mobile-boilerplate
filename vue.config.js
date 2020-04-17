@@ -197,6 +197,7 @@ module.exports = {
       less: {
         modifyVars: {
           // 或者可以通过 less 文件覆盖（文件路径为绝对路径）
+          hack: `true; @import "${resolve("src/assets/style/theme.less")}";`
         }
       }
     }
