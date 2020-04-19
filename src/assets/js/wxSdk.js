@@ -1,8 +1,8 @@
 import Vue from "vue";
 export const wxConfig = function(options) {
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     Vue.wx.config({
-      debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+      debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
       appId: options.appId, // 必填，公众号的唯一标识
       timestamp: options.timeStamp, // 必填，生成签名的时间戳
       nonceStr: options.nonceStr, // 必填，生成签名的随机串
@@ -16,7 +16,8 @@ export const wxConfig = function(options) {
     });
     Vue.wx.error(function(err) {
       Vue.store.commit("wxInit", false);
-      reject(err);
+      Vue.gb.Toast.fail(err.errMsg);
+      console.log(err);
       // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
     });
   });
@@ -33,6 +34,7 @@ export const wxShare = function({ title, desc, link, imgUrl }) {
         resolve(true);
       },
       fail: function(err) {
+        Vue.gb.Toast.fail(err.errMsg);
         reject(err);
       }
     });
@@ -44,6 +46,7 @@ export const wxShare = function({ title, desc, link, imgUrl }) {
         resolve(true);
       },
       fail: function(err) {
+        Vue.gb.Toast.fail(err.errMsg);
         reject(err);
       }
     });
@@ -61,6 +64,7 @@ export function wxLocation() {
         });
       },
       fail: function(err) {
+        Vue.gb.Toast.fail(err.errMsg);
         reject(err);
       }
     });

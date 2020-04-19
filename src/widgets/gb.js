@@ -1,6 +1,9 @@
 import { tokenName, loginPage } from "@config/index";
 import { getAgentInfo } from "@api/index";
 import Storage from "@assets/js/storage";
+// const tk =
+//   "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjbGllbnRJZCI6IkJST0tFUiIsInNjb3BlIjoiQlJPS0VSIiwiaXNzIjoiaHR0cDovL2xpeW91LmNvIiwiZXhwIjoxNTg3MzU0NTcxLCJ1c2VySWQiOjIxMzI4NSwiZXhwaXJlc0F0IjoxNTg3MzU0NTcxNzI4fQ.yn49X64BqGYWC-0FxdDAHsp-3ceb7PRhPvHsCqyrVRg";
+
 export default {
   install(Vue, options = {}) {
     Vue.gb = Vue.prototype.$gb = {
@@ -49,7 +52,7 @@ export default {
             Vue.store.commit("accountToken", token);
             await Vue.gb.initAgentInfo();
           } else if (!token) {
-            Vue.gb.toLogin();
+            // Vue.gb.toLogin();
           }
         } else {
           Vue.store.commit("accessType", "customer");
@@ -59,9 +62,11 @@ export default {
       async initAgentInfo(options) {
         const res = await getAgentInfo(options);
         const userInfo = res.data.body;
-        Vue.store.commit("userInfo", userInfo);
-        Vue.store.commit("abstractText", userInfo.memo || "");
-        localStorage.setItem("userInfo", JSON.stringify(userInfo));
+        if (userInfo) {
+          Vue.store.commit("userInfo", userInfo);
+          Vue.store.commit("abstractText", userInfo.memo || "");
+          localStorage.setItem("userInfo", JSON.stringify(userInfo));
+        }
       },
       toLogin() {
         localStorage.removeItem("userInfo");
@@ -79,7 +84,6 @@ export default {
         const userInfo = Vue.store.state.userInfo;
         userInfo.headImgUrl = avatar;
         Vue.store.commit("userInfo", userInfo);
-        Vue.store.commit("abstractText", avatar);
         localStorage.setItem("userInfo", JSON.stringify(userInfo));
       }
     };

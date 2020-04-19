@@ -26,7 +26,7 @@
               :class="{
                 up: item.priceDiff > 0,
                 down: item.priceDiff < 0,
-                ping: item.priceDiff == 0
+                ping: !item.priceDiff
               }"
               style="line-height:60px"
             >
@@ -35,7 +35,7 @@
                 :class="{
                   up: item.priceDiff > 0,
                   down: item.priceDiff < 0,
-                  ping: item.priceDiff == 0
+                  ping: !item.priceDiff
                 }"
               ></i>
               <strong
@@ -43,7 +43,7 @@
                 :class="{
                   up: item.priceDiff > 0,
                   down: item.priceDiff < 0,
-                  ping: item.priceDiff == 0
+                  ping: !item.priceDiff
                 }"
                 style="padding-bottom: 5px"
                 >{{ $gb.thousandFormat(item.priceDiff) }}</strong
@@ -81,7 +81,8 @@ export default {
       handler(newVal) {
         this.propertyInfo = newVal;
       },
-      deep: true
+      deep: true,
+      immediate: true
     }
   }
 };

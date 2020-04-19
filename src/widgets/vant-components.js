@@ -12,7 +12,8 @@ import {
   Button,
   Field,
   PullRefresh,
-  Overlay
+  Overlay,
+  Image as VanImage
 } from "vant";
 const fbCmps = [Notify, Toast, Dialog];
 const usCmps = [
@@ -26,7 +27,8 @@ const usCmps = [
   Button,
   Field,
   PullRefresh,
-  Overlay
+  Overlay,
+  VanImage
 ];
 export const vantCmp = {};
 fbCmps.forEach(cmp => {

@@ -27,7 +27,7 @@
   </div>
 </template>
 <script>
-import {updateMemo} from "@api/index"
+import { updateMemo } from "@api/index";
 export default {
   data() {
     return {
@@ -48,20 +48,20 @@ export default {
       updateMemo({
         memo: this.value
       }).then(res => {
-          if (res.data.resultCode === 0) {
-            const t = setTimeout(() => {
-              this.$gb.updateMemo(this.value);
-              this.$router.go(-1);
-              clearTimeout(t);
-            }, 500);
-            this.$toast.success({
-              duration: 500,
-              message: "保存成功"
-            });
-          } else {
-            this.$toast(res.data.errMsg);
-          }
-        });
+        if (res.data.resultCode === 0) {
+          const t = setTimeout(() => {
+            this.$gb.updateMemo(this.value);
+            this.$router.go(-1);
+            clearTimeout(t);
+          }, 500);
+          this.$toast.success({
+            duration: 500,
+            message: "保存成功"
+          });
+        } else {
+          this.$toast(res.data.errMsg);
+        }
+      });
     }
   }
 };

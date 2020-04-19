@@ -1,7 +1,5 @@
 import Vue from "vue";
-import axios from "axios";
 import Qs from "qs";
-import { fls } from "@config/index";
 const flag = "v1";
 export function dailyQuotes(isRefresh, params) {
   return Vue.axios.request({
@@ -17,6 +15,10 @@ export function recommendTop(isRefresh, params) {
     method: "get",
     url: `/rabbit/${flag}/city-home/users-recommend-top`,
     params,
+    headers: {
+      appid: "1",
+      currentVersion: "12.1.1"
+    },
     loading: !isRefresh
   });
 }
@@ -66,10 +68,7 @@ export function updateHeadUrl(data) {
 }
 
 export function uploadImage(data) {
-  const _axios = axios.create({
-    baseURL: fls
-  });
-  return _axios({
+  return Vue.axios.request({
     method: "post",
     url: "/cms/upload/img",
     data,
@@ -91,7 +90,7 @@ export function wxAuth() {
     method: "get",
     url: "/pay-platform/authorized/get-authorized-info",
     headers: {
-      url: window.location.href
+      url: window.location.href.split("#")[0]
     }
   });
 }

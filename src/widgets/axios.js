@@ -3,7 +3,7 @@ import { tokenName } from "@config/index";
 
 export default {
   install(Vue, options) {
-    axios.defaults.baseURL = options.api || "/api";
+    axios.defaults.baseURL = options.api || "";
     axios.defaults.headers.post["Content-Type"] = "application/json";
     axios.defaults.headers.post["Accept"] =
       "application/json; charset=utf-8, text/plain, */*";
@@ -14,7 +14,7 @@ export default {
 
     axios.interceptors.request.use(
       function(request) {
-        // TODO: 获取token
+        // 获取token
         let token = Vue.store.state.accountToken;
         if (token) {
           request.headers[tokenName] = token;
@@ -39,17 +39,15 @@ export default {
         return response;
       },
       function(error) {
-        Vue.gb.Toast.clear();
-
         let response = error.response;
         if (response) {
           let data = response.data || {};
           if (data.code === 401) {
-            // 登录无效 TODO:
+            // 登录无效
             Vue.gb.toLogin();
           } else {
-            if (data.message) {
-              Vue.gb.Toast.fail(data.message);
+            if (data.errMsg) {
+              Vue.gb.Toast.fail(data.errMsg);
             } else {
               Vue.gb.Toast.fail(`请求失败`);
             }

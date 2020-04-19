@@ -9,7 +9,7 @@
         <div class="header-card">
           <div class="left-item">
             <div class="img-box">
-              <img class="avatar" src="../assets/img/logo.png" alt="" />
+              <img class="avatar" :src="agentInfo.headImgUrl" alt="avatar" />
             </div>
             <div class="agent-info">
               <strong>{{ agentInfo.superiorName }}为您提供咨询</strong>
@@ -35,12 +35,21 @@
             class="agent-avatar-box"
             :class="{ 'grey-bg': agentInfo.headImgUrl }"
           >
-            <img
+            <van-image
+              lazy-load
               class="head-img-url"
               v-if="agentInfo.headImgUrl"
               :src="agentInfo.headImgUrl"
               alt="avatar"
+              error-icon="photo-o"
+              @error="agentInfo.headImgUrl = ''"
             />
+            <!-- <img
+              class="head-img-url"
+              v-if="agentInfo.headImgUrl"
+              :src="agentInfo.headImgUrl"
+              alt="avatar"
+            /> -->
             <img
               class="default-img"
               v-else-if="accessType === 'customer'"
@@ -89,10 +98,10 @@
                   :data="propertyDynamic.secondHandContent"
                 />
               </van-tab>
-              <van-tab title="新房" v-if="propertyDynamic.newHouseCentent">
+              <van-tab title="新房" v-if="propertyDynamic.newHouseContent">
                 <house-tab
                   type="new-house"
-                  :data="propertyDynamic.newHouseCentent"
+                  :data="propertyDynamic.newHouseContent"
                 />
               </van-tab>
               <van-tab title="主营小区" v-if="propertyDynamic.houseContent">
@@ -120,7 +129,9 @@
             <div class="header">
               <h2 class="title">{{ onlyReportInfo.title }}</h2>
               <p class="to-view-box">
-                <span class="text">{{ onlyReportInfo.viewCount }}人看过</span>
+                <span class="text"
+                  >{{ onlyReportInfo.viewCount || 0 }}人看过</span
+                >
                 <i class="icon arrow"></i>
               </p>
             </div>
@@ -174,7 +185,7 @@
                       <li class="tag grey">房龄19年</li>
                     </ul>
                     <p class="hangout">
-                      挂牌<span class="hangday">{{ item.listedDay }}</span
+                      挂牌<span class="hangday">{{ item.listedDay || 0 }}</span
                       >天
                     </p>
                   </div>
@@ -238,6 +249,7 @@
       </div>
     </div>
 
+    <!-- 咨询弹窗 -->
     <van-action-sheet
       v-model="showActionSheet"
       v-if="actions"
@@ -247,6 +259,8 @@
       safe-area-inset-bottom
     >
     </van-action-sheet>
+
+    <!-- 分享提示弹窗 -->
     <share-overly ref="shareOverly" />
   </div>
 </template>
@@ -319,6 +333,7 @@ export default {
       const vm = this;
       this.getOnlyReports(isRefresh);
       this.getEstateHouse(isRefresh);
+      // 如果授权成功就不要用重复授权
       if (this.wxInit) {
         const { lng, lat } = await wxLocation();
         this.getDailyQuotes(isRefresh, { lng, lat });
@@ -332,7 +347,7 @@ export default {
             this.getDailyQuotes(isRefresh, { lng, lat });
             this.getRecommendTop(isRefresh, { lng, lat });
           } else {
-            vm.$toast.fail(res.data.message);
+            vm.$toast.fail(res.data.errMsg);
           }
         } catch (error) {
           vm.$toast.fail("微信sdk注册失败!");
@@ -340,16 +355,16 @@ export default {
       }
     },
     // 城市动态
-    async getDailyQuotes(isRefresh = false, options) {
+    async getDailyQuotes(isRefresh = false) {
       if (this.wxInit) {
         try {
           const res = await dailyQuotes(isRefresh, {
             cityId: this.cityId,
-            include: "1,2,5",
-            ...options
+            include: "1,2,5"
+            // ...options
           });
           this.isRefresh = false;
-          this.propertyDynamic = res.data.body;
+          this.propertyDynamic = res.data.body || {};
         } catch (err) {
           this.isRefresh = false;
         }
@@ -365,9 +380,15 @@ export default {
           this.isRefresh = false;
           const body = res.data.body;
           if (body && body.list) {
-            this.recommendList = body.list.filter(
-              item => item.type === "article"
-            );
+            this.recommendList = body.list
+              .filter(item => item.type === "article")
+              .map(item => {
+                if (typeof item.content === "string") {
+                  return JSON.parse(item.content);
+                } else {
+                  return item.content;
+                }
+              });
             const title = this.recommendList[0].title;
             this.initCustomShare(title);
           } else {
@@ -385,9 +406,9 @@ export default {
       })
         .then(res => {
           this.isRefresh = false;
-          const body = res.data.body;
+          const body = res.data.body || {};
           if (body.type == 3) {
-            this.onlyReportInfo = body.onlyReports;
+            this.onlyReportInfo = body.onlyReports || {};
           } else {
             this.onlyReportInfo = {};
           }
@@ -405,8 +426,8 @@ export default {
         .then(res => {
           this.isRefresh = false;
           const body = res.data.body;
-          if (body && body.estateList) {
-            this.myEstateHouse = body.estateList;
+          if (body && body.length) {
+            this.myEstateHouse = body;
           } else {
             this.myEstateHouse = [];
           }
@@ -423,7 +444,9 @@ export default {
         const { url } = res.data.data;
         try {
           const res = await updateHeadUrl({ headUrl: url });
-          console.log(res, "mmm");
+          if (res.data && res.data.resultCode === 0) {
+            this.$gb.updateAvatar(url);
+          }
         } catch (error) {
           vm.$toast.fail("图片上传失败!");
         }
@@ -454,10 +477,10 @@ export default {
       this.$router.push("/comment");
     },
     navigateToRecommend(item) {
-      location.href = item.mUrl;
+      location.href = item.url;
     },
     navigateToReportItem(item) {
-      location.href = item.mUrl;
+      location.href = item.url;
     },
     // 跳转商城
     navigateToShop() {
@@ -475,7 +498,7 @@ export default {
     handleShare() {
       this.$refs.shareOverly.showOverly();
     },
-    // 微信自定义分享 TODO:
+    // 微信自定义分享
     async initCustomShare(title) {
       const vm = this;
       try {
@@ -595,14 +618,21 @@ export default {
 
   .agent-avatar-box {
     text-align: right;
-    img {
-      &.head-img-url {
-        width: 124px;
-        height: 142px;
-        position: absolute;
-        bottom: 1px;
-        right: 30px;
+    .head-img-url {
+      width: 124px;
+      height: 142px;
+      position: absolute;
+      bottom: 1px;
+      right: 30px;
+      .van-image__error {
+        background: transparent;
+        border: 1px solid #f7f8fa;
+        .van-image__error-icon {
+          font-size: 35px;
+        }
       }
+    }
+    img {
       &.default-img {
         width: 200px;
         height: 150px;

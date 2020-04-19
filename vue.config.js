@@ -13,11 +13,8 @@ function resolve(dir) {
 module.exports = {
   devServer: {
     https: true,
+    disableHostCheck: true,
     proxy: {
-      "/cms": {
-        target: process.env.VUE_APP_FLS,
-        changeOrigin: true
-      },
       "/api": {
         target: process.env.VUE_APP_API,
         changeOrigin: true,

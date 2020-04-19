@@ -34,7 +34,7 @@
             :class="{
               up: item.quotePriceDiff > 0,
               down: item.quotePriceDiff < 0,
-              ping: item.quotePriceDiff == 0
+              ping: !item.quotePriceDiff
             }"
           ></i>
         </p>
@@ -70,7 +70,8 @@ export default {
       handler(newVal) {
         this.propertyInfo = newVal;
       },
-      deep: true
+      deep: true,
+      immediate: true
     }
   }
 };
