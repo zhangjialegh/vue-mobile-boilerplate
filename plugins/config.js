@@ -1,0 +1,1 @@
+export const tokenName = 'third_session'

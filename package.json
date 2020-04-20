@@ -13,6 +13,7 @@
   "dependencies": {
     "cookie-universal-nuxt": "^2.1.3",
     "cross-env": "^5.2.0",
+    "js-md5": "^0.7.3",
     "koa": "^2.6.2",
     "nuxt": "^2.0.0",
     "qs": "^6.9.3",

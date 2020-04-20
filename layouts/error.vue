@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
+  <div class="error-container">
     <div>
-      <p class="error-text">404</p>
+      <p class="error-text">页面错误</p>
       <logo />
     </div>
   </div>
@@ -16,17 +16,14 @@ export default {
   },
   head() {
     return {
-      title: '404'
+      title: 'error'
     }
-  },
-  created() {
-    console.log('error')
   }
 }
 </script>
 
 <style lang="less">
-.container {
+.error-container {
   margin: 0 auto;
   min-height: 100vh;
   display: flex;

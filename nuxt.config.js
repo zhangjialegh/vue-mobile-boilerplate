@@ -34,9 +34,11 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    '@/plugins/storage',
+    '@/plugins/global',
     {src: '@/plugins/vant-ui', ssr: true},
     '@/plugins/axios',
-    '@/plugins/bus'
+    '@/plugins/mixins'
   ],
   /*
   ** Nuxt.js dev-modules
@@ -62,7 +64,7 @@ module.exports = {
   },
   proxy: {
     '/api': {
-      target: 'https://qz-sqet.btzh.net',
+      target: 'http://localhost:8000',
       pathRewrite: {
         '^/api': '/api'
       }
