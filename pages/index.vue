@@ -17,7 +17,23 @@ export default {
   },
   data() {
     return {
+      code: ''
     }
+  },
+  async asyncData({$axios}) {
+    try {
+      const res = await $axios({
+        url: '/api/mail/send',
+        method: 'post',
+        data: {
+          email: ''
+        }
+      })
+      return res
+    } catch (error) {
+      console.log(error)
+    }
+    
   },
   methods: {
     

@@ -1,6 +1,10 @@
 import qs from 'qs'
 import {VantUi} from '~/plugins/vant-ui'
 import {tokenName} from '~/plugins/config'
+/**
+ * @param {$axios} loading
+ *  如果 $axios的request里还有loading，就会显示loading组件
+ */
 
 export default function({ $axios, redirect, app, store }) {
   const isClient = process.client //客户端
