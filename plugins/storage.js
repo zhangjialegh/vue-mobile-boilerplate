@@ -1,7 +1,7 @@
 "use strict";
 /**
  * storage util
- * @2018.04.16
+ * @2020.04.01
  * @local data will store for two place => [localStorage, cookie]
  */
 export default function({ app }, inject) {

@@ -91,6 +91,3 @@ sw.*
 
 # wxss
 *.wxss
-.env.development
-yarn.lock
-package-lock.json
