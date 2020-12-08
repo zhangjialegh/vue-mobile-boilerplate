@@ -64,27 +64,6 @@
       document.head.appendChild(viewportEl);
     }
   })();
-
-  hotcss.px2rem = function(px, designWidth) {
-    //预判你将会在JS中用到尺寸，特提供一个方法助你在JS中将px转为rem。就是这么贴心。
-    if (!designWidth) {
-      //如果你在JS中大量用到此方法，建议直接定义 hotcss.designWidth 来定义设计图尺寸;
-      //否则可以在第二个参数告诉我你的设计图是多大。
-      designWidth = parseInt(hotcss.designWidth, 10);
-    }
-
-    return (parseInt(px, 10) * 320) / designWidth / 20;
-  };
-
-  hotcss.rem2px = function(rem, designWidth) {
-    //新增一个rem2px的方法。用法和px2rem一致。
-    if (!designWidth) {
-      designWidth = parseInt(hotcss.designWidth, 10);
-    }
-    //rem可能为小数，这里不再做处理了
-    return (rem * 20 * designWidth) / 320;
-  };
-
   hotcss.mresize = function() {
     //对，这个就是核心方法了，给HTML设置font-size。
     var innerWidth =
@@ -99,10 +78,14 @@
       return false;
     }
 
-    document.documentElement.style.fontSize = (innerWidth * 20) / 320 + "px";
+    document.documentElement.style.fontSize = (innerWidth * 32) / 750 + "px";
 
     hotcss.callback && hotcss.callback();
   };
+
+  /**
+   * 设计稿 375 ---> font-size 16px  357/16 = innerWidth/x  x=16*innerWidth/375
+   */
 
   hotcss.mresize();
   //直接调用一次
@@ -111,7 +94,7 @@
     "resize",
     function() {
       clearTimeout(hotcss.tid);
-      hotcss.tid = setTimeout(hotcss.mresize, 33);
+      hotcss.tid = setTimeout(hotcss.mresize, 300);
     },
     false
   );
@@ -123,7 +106,7 @@
   setTimeout(function() {
     hotcss.mresize();
     //防止某些机型怪异现象，异步再调用一次
-  }, 333);
+  }, 300);
 
   window.hotcss = hotcss;
   //命名空间暴露给你，控制权交给你，想怎么调怎么调。

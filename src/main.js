@@ -37,7 +37,7 @@ Vue.use(wx);
 Vue.config.productionTip = false;
 
 // mock
-// require("./mock");
+require("./mock");
 
 // 判断是否是经纪人分享的链接
 import qs from "qs";

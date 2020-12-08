@@ -12,5 +12,5 @@ if (href.includes("dev.2boss.cn")) {
   baseDomin = "https://agent.2boss.cn";
   baseDomin = "https://agent.2boss.cn/api";
 } else {
-  baseDomin = "https://localhost:8080/api";
+  baseDomin = "https://192.168.1.104:8080/api";
 }

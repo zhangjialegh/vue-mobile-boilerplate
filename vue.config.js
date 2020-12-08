@@ -3,7 +3,7 @@ const autoprefixer = require("autoprefixer");
 const px2rem = require("postcss-px2rem");
 
 const postcss = px2rem({
-  remUnit: 25.6 //基准大小 baseSize
+  remUnit: 16 //基准大小 baseSize
 });
 
 function resolve(dir) {
